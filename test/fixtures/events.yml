@@ -1,0 +1,7 @@
+one:
+  occurs_at: 2016-03-01 20:00:00
+  location: "Joseph's House"
+
+two:
+  occurs_at: 2016-03-28 21:00:00
+  location: "Industry Co-Working"
