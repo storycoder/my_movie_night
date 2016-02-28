@@ -10,6 +10,8 @@ class MovieTest < ActiveSupport::TestCase
   	assert @movie.valid?
   end
   should belong_to(:event)
+  should have_many(:votes)
+  
   should validate_presence_of(:title)
   should validate_presence_of(:url)
   should validate_presence_of(:event)
