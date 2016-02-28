@@ -15,7 +15,17 @@ class EventTest < ActiveSupport::TestCase
   .scoped_to(:location)
   .with_message('already scheduled for that location')
   .case_insensitive
-  
 
+  test 'event has winning movie' do 
+    alien = movies(:alien)
+    tron = movies(:tron)
 
+    event = alien.event
+
+    alien.vote('Joe')
+    alien.vote('Rene')
+    tron.vote('Lara')
+
+    assert_equal event.winning_movie, alien
+  end
 end
