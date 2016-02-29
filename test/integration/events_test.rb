@@ -15,4 +15,16 @@ class EventsTest < ActionDispatch::IntegrationTest
 		assert page.has_content?(february.occurs_at)
 	end
 
+	test 'Can show an individual event' do 
+		january = events(:january)
+		visit events_path
+
+		click_link january.location
+
+		assert has_content?('Event')
+
+		assert page.has_content?(january.location)
+		assert page.has_content?(january.occurs_at)
+	end
+
 end
