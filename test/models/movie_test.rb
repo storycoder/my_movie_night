@@ -9,6 +9,7 @@ class MovieTest < ActiveSupport::TestCase
   test 'has a valid fixture' do
   	assert @movie.valid?
   end
+  
   should belong_to(:event)
   should have_many(:votes)
   

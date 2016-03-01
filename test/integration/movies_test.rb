@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MovieTest < ActionDispatch::IntegrationTest
+class MoviesTest < ActionDispatch::IntegrationTest
   test 'Event page shows all movies' do 
   	january = events(:january)
 
