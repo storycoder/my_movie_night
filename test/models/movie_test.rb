@@ -3,7 +3,7 @@ require 'test_helper'
 class MovieTest < ActiveSupport::TestCase
    
   def setup
-	@movie = movies(:alien)
+	 @movie = movies(:alien)
   end
 
   test 'has a valid fixture' do

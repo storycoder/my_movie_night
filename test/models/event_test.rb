@@ -30,7 +30,9 @@ class EventTest < ActiveSupport::TestCase
     assert_difference 'Vote.count' -3 do 
       @event.destroy
     end
-
-    assert_equal event.winning_movie, alien
+  end
+  
+  test 'event has a winning movie' do 
+      assert_equal event.winning_movie, movies(:alien)
   end
 end
