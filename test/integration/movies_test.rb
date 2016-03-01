@@ -22,10 +22,10 @@ class MoviesTest < ActionDispatch::IntegrationTest
   		fill_in "URL", with: "http://example.com"
   		click_button "Suggest Movie"
   	end
-  	assert page.has_content?("Star Wars")
+  	assert page.has_link?("Star Wars", href: "http://example.com")
   end
 
-  test 'Event page does not let you create and invalid movie' do
+  test 'Event page does not allow you to suggest and invalid movie' do
   	january = events(:january)
   	visit event_path(january)
 
@@ -39,11 +39,12 @@ class MoviesTest < ActionDispatch::IntegrationTest
 
   test 'Event page allows you to delete a movie' do 
   	january = events(:january)
+    alien = movies(:alien)
 
   	visit event_path(january)
 
-  	find("li", text: "Alien").click_link("Delete")
+  	find("li", text: alien.title).click_link("Delete")
 
-  	refute page.has_content?("Alien")
+  	refute page.has_link?(alien.title)
   end
 end
