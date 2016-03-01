@@ -15,8 +15,8 @@ class EventTest < ActiveSupport::TestCase
   should validate_presence_of(:occurs_at)
   should validate_presence_of(:location)
 
-  should validate_uniqueness_of(:location)
-  .scoped_to(:occurs_at)
+  should validate_uniqueness_of(:occurs_at)
+  .scoped_to(:location)
   .with_message('event already scheduled for that location')
   .case_insensitive
 
@@ -34,5 +34,14 @@ class EventTest < ActiveSupport::TestCase
   
   test 'event has a winning movie' do 
       assert_equal event.winning_movie, movies(:alien)
+
+      # event = Event.create(location: "foo", occurs_at: Time.now)
+      # martion = event.movies.build(title: "The Martian", url: "martian.com")
+      # porkys = event.movies.build(title: "Porky's", url: "stayclassyjoe.com")
+
+      # martian.vote("a")
+      # martian.vote("b")
+      # martian.vote("c")
+      # porkys.vote("z")
   end
 end

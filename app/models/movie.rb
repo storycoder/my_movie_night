@@ -13,6 +13,6 @@ class Movie < ActiveRecord::Base
 					  }
 
 	def vote(person)
-		votes << Vote.create(event: event, person: person)
+		votes << Vote.create(movie: self, event: event, person: person)
 	end
 end
