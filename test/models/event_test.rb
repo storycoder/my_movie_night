@@ -1,8 +1,12 @@
 require 'test_helper'
 
 class EventTest < ActiveSupport::TestCase
+
+  def setup
+    @event = events(:january)
+  end
+
   test 'has a valid fixture' do 
-  	@event = events(:january)
   	assert @event.valid?
   end
   	
@@ -11,20 +15,21 @@ class EventTest < ActiveSupport::TestCase
   should validate_presence_of(:occurs_at)
   should validate_presence_of(:location)
 
-  should validate_uniqueness_of(:occurs_at)
-  .scoped_to(:location)
-  .with_message('already scheduled for that location')
+  should validate_uniqueness_of(:location)
+  .scoped_to(:occurs_at)
+  .with_message('event already scheduled for that location')
   .case_insensitive
 
-  test 'event has winning movie' do 
-    alien = movies(:alien)
-    tron = movies(:tron)
+  test 'should destroy related movies on delete' do 
+    assert_difference 'Movie.count', -3 do 
+      @event.destroy
+    end
+  end
 
-    event = alien.event
-
-    alien.vote('Joe')
-    alien.vote('Rene')
-    tron.vote('Lara')
+  test 'should destroy related votes on delete' do 
+    assert_difference 'Vote.count' -3 do 
+      @event.destroy
+    end
 
     assert_equal event.winning_movie, alien
   end
