@@ -51,6 +51,7 @@ end
 group :test do
 	gem 'capybara'
 	gem 'launchy'
+	gem 'minitest-focus'
 	gem 'minitest-reporters'
 	gem 'shoulda'
 end
