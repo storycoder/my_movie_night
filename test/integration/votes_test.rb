@@ -1,27 +1,27 @@
 require 'test_helper'
 
 class VotesTest < ActionDispatch::IntegrationTest
+
+  def setup
+    @user = users(:alice)
+    sign_in(@user)
+
+    @january = events(:january)
+    @alien = movies(:alien)
+    @tron = movies(:tron)
+
+    visit event_path(@january)
+  end
   test 'Event page shows how many votes each movie has' do 
-  	january = events(:january)
-  	alien = movies(:alien)
-  	tron = movies(:tron)
-
-  	visit event_path(january)
-
-  	assert find("li", text: alien.title).has_content?("Votes: 2")
-  	assert find("li", text: tron.title).has_content?("Votes: 1")
+  	assert find("tr", text: alien.title).has_selector?("td", text "2")
+  	assert find("tr", text: tron.title).has_selector?("td", text: 1)
   end
 
   test 'Event page allows you to vote on a movie' do 
-  	january = events(:january)
-  	alien = movies(:alien)
-
-  	visit event_path(january)
-
-  	movie_row = find("li", text: alien.title)
-  	movie_row.click_link("Vote")
+  	find("tr", text: @alien.ttle).click_link("Vote")
 
   	assert_equal 3, alien.votes.count
-  	assert movie_row.has_content?("Votes: 3")
+  	assert find("tr", text: @alien.title).has_selector?("td", text "3")
+    assert find("tr", text: @tron.title).has_selector?("td", text "1")
   end
 end

@@ -1,21 +1,28 @@
 require 'test_helper'
 
 class MoviesTest < ActionDispatch::IntegrationTest
+  def setup
+    @user = users(:alice)
+    sign_in(@user)
+
+    @january = events(:january)
+    visit event_path(@january)
+  end
+
+  def teardown
+    Warden.test_reset!
+  end
+
   test 'Event page shows all movies' do 
-  	january = events(:january)
+  	
     alien = movies(:alien)
     tron = movies(:tron)
-
-  	visit event_path(january)
 
   	assert page.has_link?(alien.title, href: alien.url)
   	assert page.has_link?(tron.title, href: tron.url)
   end
 
-  test 'Event page allow you to suggest a movie' do 
-  	january = events(:january)
-
-  	visit event_path(january)
+  test 'Event page allow you to suggest a movie' do
 
   	within("#new_movie") do 
   		fill_in "Title", with: "Star Wars"
@@ -26,8 +33,6 @@ class MoviesTest < ActionDispatch::IntegrationTest
   end
 
   test 'Event page does not allow you to suggest and invalid movie' do
-  	january = events(:january)
-  	visit event_path(january)
 
   	within("#new_movie") do 
   		click_button "Suggest Movie"
@@ -38,12 +43,12 @@ class MoviesTest < ActionDispatch::IntegrationTest
   end
 
   test 'Event page allows you to delete a movie' do 
-  	january = events(:january)
+  	
     alien = movies(:alien)
 
   	visit event_path(january)
 
-  	find("li", text: alien.title).click_link("Delete")
+  	find("tr", text: alien.title).click_link("Delete")
 
   	refute page.has_link?(alien.title)
   end
