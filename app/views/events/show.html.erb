@@ -1,10 +1,10 @@
 <% content_for :page_title do %>
    <%= @event.location %>
    <small>
-   		<%= @event.occurs_at.to_formatted_s(:long_ordinal) %>
+   		<%= @event.occurs_at %> (<%= distance_of_time_in_words_to_now(@event.occurs_at) %>)
    </small>
    <div class="pull-right title-nav">
-   	<%= link_to "Edit", edit_event_path(@event) %>
+   	<%= link_to "Edit", edit_event_path(@event) %> 
    	| <%= link_to "Delete", @event, method: :delete, data: { confirm: "Are you sure you want to delete this event?" } %>
    </div>
 <% end %>
