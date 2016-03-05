@@ -23,10 +23,10 @@
 			</tr>
 		</thead>
 		<% @event.movies.select { |m| m.persisted? }.each do |movie| %>
-		<tr>
+		<tr "data-movie-id"<%= movie.id %>>
 			<td><%= link_to movie.title, movie.url %></td>
-			<td><%= movie.votes.count %></td>
-			<td><%= link_to "Vote", vote_event_movie_path(@event, movie) %></td> 
+			<td class="vote-count"><%= movie.votes.count %></td>
+			<td><%= link_to "Vote", vote_event_movie_path(@event, movie), remote: true %></td> 
 			<td><%= link_to "Delete", event_movie_path(@event, movie), method: :delete, data: { confirm: 'Are you sure you want to delete #{movie.title}?'} %></td>
 		</tr>
 		<% end %>
@@ -62,9 +62,13 @@
 	</div>
 <% end %>
 
+<div class="vote-history">
+	<%= render 'vote_history' %>
+</div>
+
 <hr>
 
-<div class="row">	
+<!-- <div class="row">	
 	<div class="row">
 		<h3>Add a Movie</h3>
 		<% if @movie.errors.any? %>
@@ -89,5 +93,5 @@
 			<%= f.submit 'Suggest Movie', class: 'btn btn-primary' %>
 		<% end %>
 	</div>
-</div>
+</div> -->
 
