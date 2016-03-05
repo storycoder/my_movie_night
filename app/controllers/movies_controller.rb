@@ -23,7 +23,7 @@ class MoviesController < ApplicationController
 	def vote
 		@event = Event.find(params[:event_id])
 		@movie = Movie.find(params[:id])
-		@movie.vote
+		@movie.vote(current_user)
 		redirect_to @event, notice: "Voted for #{@movie.title}"
 	end
 

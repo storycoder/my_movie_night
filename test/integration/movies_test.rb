@@ -46,9 +46,7 @@ class MoviesTest < ActionDispatch::IntegrationTest
   	
     alien = movies(:alien)
 
-  	visit event_path(january)
-
-  	find("tr", text: alien.title).click_link("Delete")
+  	find("movie-list tr", text: alien.title).click_link("Delete")
 
   	refute page.has_link?(alien.title)
   end

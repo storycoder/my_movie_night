@@ -5,8 +5,12 @@ Rails.application.routes.draw do
       get 'vote', on: :member
     end
   end
+
+  authenticated :user do
+    root to: "events#index", as: "user_root"
+  end
   
-  root 'events#index'
+  root 'home#index'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
